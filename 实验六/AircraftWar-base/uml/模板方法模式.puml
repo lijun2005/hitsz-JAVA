@@ -1,0 +1,168 @@
+@startuml
+
+abstract class Game{
+   # backGroundTop: int
+    # executorService: ScheduledExecutorService
+    # timeInterval: int
+    + time: int
+    # enemyAircrafts: List<AbstractEnemyAircraft>
+    # heroBullets: List<BaseBullet>
+    # enemyBullets: List<BaseBullet>
+    # props: List<BaseProp>
+    # mobFactory: EnemyFactory
+    # eliteFactory: EnemyFactory
+    # eliteplusFactory: EnemyFactory
+    # cycleDurationEnemyGenerate: int
+    # cycleDurationEnemyShoot: int
+    # cycleDurationHeroShoot: int
+    # EnemyGenerateTime: int
+    # EnemyShootTime: int
+    # HeroShootTime: int
+    # mapPath: String
+    # gameOverFlag: boolean
+    # isPaused: boolean
+    # pauseLock: Object
+    # eliteProb: double
+    # elitePlusProb: double
+    # all_bgmThread: MusicThread
+    # gameover_bgmThread: MusicThread
+    # boss_gbmThread: MusicThread
+    # shakeThread: Thread
+    # usemusic: boolean
+    # method_kind: int
+    # heroPower: int
+    # heroHp: int
+    # mobHp: int
+    # mobSpeedx: int
+    # mobSpeedy: int
+    # eliteHp: int
+    # elitePower: int
+    # eliteSpeedx: int
+    # eliteSpeedy: int
+    # elitePlusHp: int
+    # elitePlusPower: int
+    # elitePlusSpeedx: int
+    # elitePlusSpeedy: int
+    # BossHp: int
+    # BossPower: int
+    # BossSpeedx: int
+    # BossSpeedy: int
+    # enemyMaxNumber: int
+    # userdao: UserDao
+    + Game(boolean usemusic, String mapPath)
+    + action():void
+    + togglePause():void
+    # {abstract} initializeParameter():void
+    # {abstradt} changeParameter():void
+    # {abstract} generateEnemyAction():void
+    # {abstract} enemyShootAction():void
+    # {abstract} heroShootAction():void
+    # bulletsMoveAction():void
+    # propsMoveAction():void
+
+    # {abstract} aircraftsMoveAction():void
+    # {abstract} crashCheckAction():void
+    # {abstract} postProcessAction():void
+    # {abstract} gameoverProcessAction():void
+    # paintImageWithPositionRevised(Graphics g, List<? extends AbstractFlyingObject> objects):void
+}
+
+Game --|>Jpanel
+
+class easyGame{
+    - heroAircraft:HeroAircraft
+    - probability: double
+    - resultEnemyGenerate:Object[]
+    - resultEnemyShoot: Object[]
+    - resultHeroShoot:Object[]
+    - rand:Random
+    + easyGame(boolean usemusic,String mapPath)
+    #  initializeParameter():void
+    #  changeParameter():void
+    #  generateEnemyAction():void
+    #  enemyShootAction():void
+    #  heroShootAction():void
+    
+    #  aircraftsMoveAction():void
+    # crashCheckAction():void
+    # postProcessAction():void
+    #  gameoverProcessAction():void
+    + paint(Graphics g):void
+    - paintScoreAndLife(Graphics g) : void
+}
+
+
+
+class middleGame{
+        - heroAircraft:HeroAircraft
+    - probability: double
+    - threshold: int 
+    - lastBossScore: int
+    - numada: double
+    - alpha:double
+    - bossFactory:EnemyFactory
+    - cycleDuration:int
+    - methodTime: int 
+
+
+    - bossList:List<AbstractEnemyAircraft> 
+    - resultEnemyGenerate:Object[]
+    - resultEnemyShoot: Object[]
+    - resultHeroShoot:Object[]
+    - resultMethod:Object[]
+    - rand:Random
+    + middleGame(boolean usemusic,String mapPath)
+    #  initializeParameter():void
+    #  changeParameter():void
+    #  generateEnemyAction():void
+    #  enemyShootAction():void
+    #  heroShootAction():void
+    
+    #  aircraftsMoveAction():void
+    # crashCheckAction():void
+    # postProcessAction():void
+    #  gameoverProcessAction():void
+    + paint(Graphics g):void
+    - paintScoreAndLife(Graphics g) : void
+        - paintBossHp(Graphics g):void
+}
+class hardGame{
+        - heroAircraft:HeroAircraft
+    - probability: double
+    - threshold: int 
+    - lastBossScore: int
+    - numada: double
+    - alpha:double
+    - beat:double
+    - gamma:double
+    - bossFactory:EnemyFactory
+    - cycleDuration:int
+    - methodTime: int 
+
+
+    - bossList:List<AbstractEnemyAircraft> 
+    - resultEnemyGenerate:Object[]
+    - resultEnemyShoot: Object[]
+    - resultHeroShoot:Object[]
+    - resultMethod:Object[]
+    - rand:Random
+    + hardGame(boolean usemusic,String mapPath)
+    #  initializeParameter():void
+    #  changeParameter():void
+    #  generateEnemyAction():void
+    #  enemyShootAction():void
+    #  heroShootAction():void
+    
+    #  aircraftsMoveAction():void
+    # crashCheckAction():void
+    # postProcessAction():void
+    #  gameoverProcessAction():void
+    + paint(Graphics g):void
+    - paintScoreAndLife(Graphics g) : void
+    - paintBossHp(Graphics g):void
+}
+
+easyGame --|>Game
+middleGame --|>Game
+hardGame --|>Game
+@enduml

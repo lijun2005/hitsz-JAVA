@@ -1,0 +1,48 @@
+@startuml
+
+class User {
+    - userName: String
+    - userScore: int
+    - userTime: String
+    +  User(String userName, int userScore, String userTime)
+    + getUserScore() : int
+    + setUserScore(int userscore) : void
+    + getUserName(): String
+    + setUserName(String Name): void
+    + getUserTime() : String
+    + setUserTime(String time): void
+    + toString(): String
+    + compareTo(User other): int
+}
+
+interface UserDao{
+    +{abstract}  getAllUser():  List<User>
+    +{abstract}  AddUser(User user):void
+    +{abstract} DeleteUser(String username):void
+    +{abstract} findUser(String username): User
+    +{abstract} save(): void
+    +{abstract} printScore(): void
+
+}
+
+
+class UserDaoImpl{
+    - users:  ArrayList<User> 
+    - savepath: Path
+    - filePath: Path
+    + UserDaoImpl(Path path)
+    + getAllUser(): List<User> 
+    + AddUser(User user) : void
+    + DeleteUser(String username): void
+    + findUser(String username): User
+    + save(): void
+    +printScore() : void
+}
+
+UserDao <|.. UserDaoImpl
+UserDaoImpl --> User
+
+Serializable <|.. User
+Comparable <|.. User
+
+@enduml

@@ -1,0 +1,53 @@
+@startuml
+
+
+interface Strategy{
+    + {abstract} shoot(AbstractAircraft aircraft,int direction,int power,int shootNum):List<BaseBullet>
+}
+
+class CircleShoot{
+    + shoot(AbstractAircraft aircraft,int direction,int power,int shootNum): List<BaseBullet>
+}
+
+class DirectShoot{
+    + shoot(AbstractAircraft aircraft,int direction,int power,int shootNum): List<BaseBullet>
+}
+
+class ScatterShoot{
+    + shoot(AbstractAircraft aircraft,int direction,int power,int shootNum): List<BaseBullet>
+}
+
+Strategy <|.. DirectShoot
+Strategy <|.. CircleShoot
+Strategy <|.. ScatterShoot
+
+class Context{
+    - strategy : Strategy
+    + Context(Strategy strategy)
+    + setStrategy(Strategy strategy) : void
+    + executeStrategy(AbstractAircraft aircraft,int direction,int power,int shootNum) : List<BaseBullet> 
+}
+
+Context o--> Strategy
+
+class HeroAircraft {
+    -{static} heroAircraft:HeroAircraft
+    - shootNum:int
+    - power:int
+    - direction:int
+    + context:Context
+    + shootthread: Thread
+    + exist_shootthread:boolean
+
+    - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + {static} getInstance() : HeroAircraft
+    + forward():void
+    + shoot():List<BaseBullet>
+    + setShootNum(int shootnum):void
+    + reset():void
+    +{static} resetInstance(): void
+}
+
+HeroAircraft o-->Context
+HeroAircraft -->HeroAircraft
+@enduml

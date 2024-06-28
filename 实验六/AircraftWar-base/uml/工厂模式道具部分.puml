@@ -1,0 +1,97 @@
+@startuml
+abstract class BaseProp
+{
+    # bgm:MusicThread
+    + BaseProp(int locationX, int locationY, int speedX, int speedY) 
+    + forward(): void
+	+ {abstract} work(HeroAircraft hero,boolean usemusic): void
+}
+
+class BloodProp {
+    - add_blood :int
+    + BloodProp(int locationX, int locationY, int speedX, int speedY)
+    + get_AddBlood(): int
+	+ work(HeroAircraft hero,boolean usemusic): void
+}
+
+class BloodPlusProp {
+    - add_blood :int
+    + BloodPlusProp(int locationX, int locationY, int speedX, int speedY)
+    + get_AddBlood(): int
+	+ work(HeroAircraft hero,boolean usemusic): void
+}
+
+class BulletProp {
+    + BulletProp(int locationX, int locationY, int speedX, int speedY)
+	+ work(HeroAircraft hero,boolean usemusic): void
+}
+
+class BulletPlusProp {
+    + BulletPlusProp(int locationX, int locationY, int speedX, int speedY)
+	+ work(HeroAircraft hero,boolean usemusic): void
+}
+
+class ScoreProp {
+    - add_score:int 
+    + ScoreProp(int locationX, int locationY, int speedX, int speedY)
+	+ work(HeroAircraft hero,boolean usemusic): void
+}
+
+class BombProp {
+    - enemyBullet: List<BaseBullet>
+    - enemyAircrafts: List<AbstractEnemyAircraft>
+    + BombProp(int locationX, int locationY, int speedX, int speedY)
+	+ work(HeroAircraft hero,boolean usemusic): void
+    + addBullets(List<BaseBullet> bullets): void
+    + addAircrafts(List<AbstractEnemyAircraft> abstractEnemyAircrafts): void
+    + notify_update(): void
+}
+
+BaseProp <|-- BloodProp
+BaseProp <|-- BombProp
+BaseProp <|-- BulletProp
+BaseProp <|-- BulletPlusProp
+BaseProp <|-- ScoreProp
+BaseProp <|-- BloodPlusProp
+
+interface PropFactory{
+    + {abstract} createProp(int locationX, int locationY, int speedX, int speedY) : BaseProp
+}
+
+class BulletFactory{
+    + createProp(int locationX, int locationY, int speedX, int speedY) : BulletProp
+}
+
+class BombFactory{
+    + createProp(int locationX, int locationY, int speedX, int speedY) : BombProp
+}
+class BloodFactory{
+    + createProp(int locationX, int locationY, int speedX, int speedY) : BloodProp
+}
+class BloodPlusFactory{
+    + createProp(int locationX, int locationY, int speedX, int speedY) : BloosPlusProp
+}
+class BulletPlusFactory{
+    + createProp(int locationX, int locationY, int speedX, int speedY) : BulletPlusProp
+}
+
+class ScoreFactory{
+    + createProp(int locationX, int locationY, int speedX, int speedY) : ScoreProp
+}
+
+PropFactory <|.. BombFactory
+PropFactory <|.. BulletFactory
+PropFactory <|.. BloodFactory
+
+PropFactory <|.. BloodPlusFactory
+PropFactory <|.. BulletPlusFactory
+PropFactory <|.. ScoreFactory
+
+
+BombFactory ..>BombProp
+BulletFactory ..>BulletProp
+BulletPlusFactory ..>BulletPlusProp
+ScoreFactory ..>ScoreProp
+BloodFactory..> BloodProp
+BloodPlusFactory ..>BloodPlusProp
+@enduml

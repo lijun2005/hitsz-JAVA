@@ -1,0 +1,21 @@
+@startuml
+class HeroAircraft {
+    -{static} heroAircraft:HeroAircraft
+    - shootNum:int
+    - power:int
+    - direction:int
+    + context:Context
+    + shootthread: Thread
+    + exist_shootthread:boolean
+
+    - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + {static} getInstance() : HeroAircraft
+    + forward():void
+    + shoot():List<BaseBullet>
+    + setShootNum(int shootnum):void
+    + reset():void
+    +{static} resetInstance(): void
+}
+
+HeroAircraft -->HeroAircraft
+@enduml

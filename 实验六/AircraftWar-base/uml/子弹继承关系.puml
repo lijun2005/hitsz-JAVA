@@ -1,0 +1,73 @@
+@startuml
+abstract class AbstractFlyingObject
+{
+    # locationX:int
+    # locationY:int
+    # speedX:int
+    # speedY:int
+    # image:BufferedImage
+    # width:int
+    # height:int
+    # isValid:boolean
+
+    + AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY)
+    + forward():void
+    + crash(AbstractFlyingObject flyingObject):boolean
+    + setLocation(double locationX, double locationY):void
+    + getLocationX():int
+    + getLocationY():int
+    + getSpeedY():int
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
+}
+
+interface Observer{
+    + {abstract} update():void
+}
+abstract class BaseBullet
+{
+    - power: int
+    + BaseBullet(int locationX, int locationY, int speedX, int speedY, int power)
+    + forward():void
+    + getPower():int
+}
+
+BaseBullet --|> AbstractFlyingObject
+BaseBullet ..|> Observer
+
+class HeroBullet
+{
+    +  HeroBullet(int locationX, int locationY, int speedX, int speedY, int power)
+    +update(): void
+}
+
+class EnemyBullet
+{
+    +EnemyBullet(int locationX, int locationY, int speedX, int speedY, int power)
+    +update():void
+}
+
+HeroBullet  --|>BaseBullet
+EnemyBullet --|>BaseBullet
+
+
+
+@enduml
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

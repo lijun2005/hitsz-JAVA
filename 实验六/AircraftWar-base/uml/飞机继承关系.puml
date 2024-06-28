@@ -1,0 +1,149 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+abstract class AbstractFlyingObject
+{
+    # locationX:int
+    # locationY:int
+    # speedX:int
+    # speedY:int
+    # image:BufferedImage
+    # width:int
+    # height:int
+    # isValid:boolean
+
+    + AbstractFlyingObject(int locationX, int locationY, int speedX, int speedY)
+    + forward():void
+    + crash(AbstractFlyingObject flyingObject):boolean
+    + setLocation(double locationX, double locationY):void
+    + getLocationX():int
+    + getLocationY():int
+    + getSpeedY():int
+    + getImage():BufferedImage
+    + getWidth():int
+    + getHeight():int
+    + notValid():boolean
+    + vanish():void
+}
+abstract class AbstractAircraft
+{
+	# maxHp:int
+    # hp:int
+    + AbstractAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + decreaseHp(int decrease):void
+    + getHp():int
+    + getMaxHp():int
+    + {abstract} shoot():List<BaseBullet>
+ }
+
+AbstractAircraft --|> AbstractFlyingObject
+
+interface Observer{
+    + {abstract} update():void
+}
+
+abstract class AbstractEnemyAircraft
+{
+    # score:int 
+    + AbstractEnemyAircraft(int locationX, int locationY, int speedX, int speedY, int hp, int score)
+    +{abstract} generate_prop():List<BaseProp>
+    +getScore(): int 
+ }
+
+AbstractEnemyAircraft --|> AbstractAircraft
+AbstractEnemyAircraft ..|> Observer
+
+class HeroAircraft {
+    -{static} heroAircraft:HeroAircraft
+    - shootNum:int
+    - power:int
+    - direction:int
+    + context:Context
+    + shootthread: Thread
+    + exist_shootthread:boolean
+
+    - HeroAircraft(int locationX, int locationY, int speedX, int speedY, int hp)
+    + {static} getInstance() : HeroAircraft
+    + forward():void
+    + shoot():List<BaseBullet>
+    + setShootNum(int shootnum):void
+    + reset():void
+    +{static} resetInstance(): void
+}
+
+AbstractAircraft <|-- HeroAircraft
+
+
+
+
+
+
+class MobEnemy {
+    - prop:BaseProp
+    - props: List<BaseProp>
+    + MobEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward():void
+    + shoot():List<BaseBullet>
+    + update():void
+    +generate_prop(): List<BaseProp> 
+}
+AbstractEnemyAircraft <|-- MobEnemy
+
+class EliteEnemy{
+    - shootNum :int
+    - power: int 
+    - direction: int
+    - prop_kind : int
+    - propFactory : PropFactory
+    - prop : BaseProp
+    - props: List<BaseProp> 
+    - context:Context
+    - {static} random: Random 
+    + EliteEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward() : void
+    + shoot():List<BaseBullet>
+    + generate_prop() : List<BaseProp> 
+    + update():void
+
+}
+AbstractEnemyAircraft <|--EliteEnemy
+
+
+class ElitePlusEnemy{
+    - shootNum :int
+    - power: int 
+    - direction: int
+    - prop_kind : int
+    - propFactory : PropFactory
+    - prop : BaseProp
+    - props: List<BaseProp> 
+    - context:Context
+    - {static} random: Random 
+    + ElitePlusEnemy(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward() : void
+    + shoot():List<BaseBullet>
+    + generate_prop() : List<BaseProp> 
+    + update():void
+
+}
+AbstractEnemyAircraft <|--ElitePlusEnemy
+
+class Boss{
+    - shootNum :int
+    - power: int 
+    - direction: int
+    - prop_kind : int
+    - propFactory : PropFactory
+    - prop : BaseProp
+    - props: List<BaseProp> 
+    - context:Context
+    - {static} random: Random 
+    + Boss(int locationX, int locationY, int speedX, int speedY, int hp)
+    + forward() : void
+    + shoot():List<BaseBullet>
+    + generate_prop() : List<BaseProp> 
+    + update():void
+
+}
+AbstractEnemyAircraft <|--Boss
+@enduml
