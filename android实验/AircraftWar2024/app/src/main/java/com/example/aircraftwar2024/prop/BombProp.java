@@ -1,0 +1,59 @@
+package com.example.aircraftwar2024.prop;
+
+
+
+import com.example.aircraftwar2024.activity.config;
+import com.example.aircraftwar2024.aircraft.AbstractEnemyAircraft;
+import com.example.aircraftwar2024.aircraft.HeroAircraft;
+import com.example.aircraftwar2024.bullet.BaseBullet;
+
+import java.util.LinkedList;
+import java.util.List;
+
+public class BombProp extends BaseProp {
+    private  List<BaseBullet> enemyBullet;
+    private List<AbstractEnemyAircraft> enemyAircrafts;
+    public BombProp(int locationX, int locationY, int speedX, int speedY) {
+        super(locationX, locationY, speedX, speedY);
+        enemyBullet = new LinkedList<>();
+        enemyAircrafts = new LinkedList<>();
+    }
+    public  void addBullets(List<BaseBullet> bullets){
+        for (BaseBullet bullet:bullets){
+            if (bullet.notValid()) {
+                continue;
+            }
+            else{
+                enemyBullet.add(bullet);
+            }
+        }
+    }
+
+    public void addAircrafts(List<AbstractEnemyAircraft> abstractEnemyAircrafts){
+        for(AbstractEnemyAircraft aircraft:abstractEnemyAircrafts){
+            if (aircraft.notValid()){
+                continue;
+            }
+            else{
+                enemyAircrafts.add(aircraft);
+            }
+        }
+    }
+
+    public  void notify_update(){
+        for (BaseBullet bullet:enemyBullet){
+            bullet.update();
+        }
+        for (AbstractEnemyAircraft aircraft:enemyAircrafts){
+            aircraft.update();
+            if(aircraft.notValid()){
+                config.score+=aircraft.getScore();
+            }
+        }
+    }
+    @Override
+    public void work(HeroAircraft hero, boolean usemusic) {
+        System.out.println("BombSupply active!");
+        notify_update();
+    }
+}
